@@ -4,13 +4,14 @@ Pry-Debugger on Heroku
 What? Pry on Heroku? But that would be my production environment!
 
 Yes. Sometimes you want to run some queries on production. And sometimes you need to inspect values inside methods. 
+The beauty of running pry-debugger in production is that you do not actually have to change any code to do your debugging.  
 
 Setup
 -----
 
 To get pry-debugger up and running on Heroku is almost the same as setting up the same for local development. 
 
-Add the 'pry-debugger' and 'pry-rails' gems to your gemfile for all groups where you want it accessible (for me this is all 
+Add the 'pry-debugger' and 'pry-rails' gems to your gemfile for all groups where you want it accessible.
 
     group :staging, :production, :development, :test do
       gem 'pry-debugger'
@@ -19,21 +20,17 @@ Add the 'pry-debugger' and 'pry-rails' gems to your gemfile for all groups where
 
 Bundle locally and push to heroku.
 
-    bundle
-    git commit -am'<your message>'
-    git push heroku master -app <app_name>
+    $ bundle
+    $ git commit -am'<your message>'
+    $ git push heroku master -app <app_name>
 
 If any of the gems fail to build on heroku, try updating these gems:
 
-    bundle update debugger debugger-linecache debugger-ruby_core_source \
-    pry-debugger
+    $ bundle update debugger debugger-linecache debugger-ruby_core_source pry-debugger
 
 
 Usage
 -----
-
-The beauty of pry-debugger in production is that you do not actually have to 
-change any code to do your debugging.  
 
 First, fire up the heroku console
 
@@ -58,8 +55,8 @@ Now you can look around and see what you want to see. When you are done inspecti
     > exit
 
 And it will bring you right back to that first binding.pry that you typed.
-From here you can run the same method again, or set a different breakpoint. 
-Or, exit again to leave the console completely.
+From here you can run the same method again, set a different breakpoint, or
+exit again to leave the console completely.
 
 Other Options
 -------------
