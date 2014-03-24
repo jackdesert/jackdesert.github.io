@@ -12,6 +12,7 @@ Setup
 To get pry-debugger up and running on Heroku is almost the same as setting up the same for local development. 
 
 Add the 'pry-debugger' and 'pry-rails' gems to your gemfile for all groups where you want it accessible.
+(If running Ruby 2.x, use the pry-byebug gem instead of pry-debugger)
 
     group :staging, :production, :development, :test do
       gem 'pry-debugger'
@@ -55,8 +56,8 @@ Now you can look around and see what you want to see. When you are done inspecti
     > exit
 
 And it will bring you right back to that first binding.pry that you typed.
-From here you can run the same method again, set a different breakpoint, or
-exit again to leave the console completely.
+From there you can run the same method again, set a different breakpoint, or
+type `exit` again to leave the console completely.
 
 Other Options
 -------------
