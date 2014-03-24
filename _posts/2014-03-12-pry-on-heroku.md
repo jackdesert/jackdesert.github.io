@@ -34,3 +34,38 @@ Usage
 
 The beauty of pry-debugger in production is that you do not actually have to 
 change any code to do your debugging.  
+
+First, fire up the heroku console
+
+    $ heroku run rails console --app <your_app_name>
+
+Then set a breakpoint right where you are. This keeps you in the console after you exit
+a breakpoint.
+
+    > binding.pry
+    
+Set a breakpoint on your method of choice.
+
+    > user = User.first
+    > break user.whats_my_name  # Alternatively, `break User#whats_my_name`
+
+Then call the method, and it will halt at the beginning of that method
+
+    > user.whats_my_name
+
+Now you can look around and see what you want to see. When you are done inspecting, exit.
+
+    > exit
+
+And it will bring you right back to that first binding.pry that you typed.
+From here you can run the same method again, or set a different breakpoint. 
+Or, exit again to leave the console completely.
+
+Other Options
+-------------
+
+For more pry-debugger options like clearing all breakpoints, access the help screen
+    
+    > help
+
+
