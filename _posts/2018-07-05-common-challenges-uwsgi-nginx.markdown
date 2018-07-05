@@ -1,4 +1,4 @@
-Common Challenges to Deploying a Python app using uWSGI and Nginx
+Common Challenges when Deploying a Python app with uWSGI and Nginx
 ==================================================================
 
 So you wrote a shiny new wsgi application and you want to
