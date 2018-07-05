@@ -84,6 +84,7 @@ the directory where we want the socket file to live.
 
 Let's go over the options in the invocation
 
+  * sudo uwsgi           # Invoke as sudo so we can set --uid and --gid
   * --chmod-socket=020   # change the socket to chmod 020 after starting
   * --enable-threads
   * --plugin=python3     # use the python3 plugin
@@ -410,6 +411,19 @@ will go away. If you changed your nginx config file, you can revert it now
 
 ### Pitfall 3b: Permission Denied when Nginx Connects to Socket
 
+#### A Bit of Background on uWSGI and Nginx
+There are two users of importance in this equation. One is the user that
+runs nginx (www-data in my case). The other is the user your app masquerades as
+via uWSGI. (ubuntu in my case).
+
+uWSGI will be the one to create the socket file, and it will set certain
+permissions on the file. Obviously since uWSGI created the file, it will
+have no trouble accessing it.
+
+By default, uWSGI creates the socket file with 755 permissions.
+With those permissions, the user of nginx are not be able to access the file.
+
+#### On to the Pitfall and its Solution
 Once you've made sure both uWSGI and Nginx are pointed at the same socket file,
 Nginx may still give you a Permission Denied error when it goes to access the socket.
 
@@ -426,9 +440,9 @@ Let's tail the nginx logs again:
     cd /var/log/nginx
     tail -f access.log error.log
 
-Let's tail the N
+Start uWSGI using the invocation above (without chmod-socket).
 
-when Nginxthis error.
+Here is the error we get:
 
 
     ==> error.log <==
@@ -438,39 +452,72 @@ when Nginxthis error.
     127.0.0.1 - - [05/Jul/2018:17:30:59 +0000] "GET / HTTP/1.1" 502 182 "-" "curl/7.47.0"
 
 
-Note that it is pointed to the correct socket file, but that is has a "Permission denied" error.
+Note that it is pointed to the correct socket file, but that is has a "Permission denied" error. uWSGI is running as ubuntu:www-data, which means when uWSGI creates the socket file, the socket file is owned by ubuntu:www-data. However, as mentioned above, by default
+uWSGI sets the permissions on the socket file to 755, which means the group
+does not have write permissions. That's why this fails.
+
+This is the most challenging pitfall in getting uWSGI and Nginx to talk
+to each other. Using the --chmod-socket option is the best way I've found to
+make it work, and that's why it's used in the original invocation shown
+at the top of this article.
+
+It's interesting to note that using "--chmod-socket=020" is enough to make this work.
+Offering it more permissions than this will also work, but in my case 020 was enough
+so I left it at that. If 020 is not enough on your system, see if it works with
+permissions set to 777, then gradually reduce permissions until you figure out
+how much are needed. (Leaving it at 777 leaves it exposed to all users.)
+
+
+the permissions of "020" ma
+--chmod-socket=020
+the only thingIn the working version from the beginning of this articleIf you are invoking uWSGI with a different --uid or a different --git
 
 
 
+#### Other (Working) uWSGI / Nginx Configurations
+
+First Working Alternate (no sudo, but open to all users):
+
+
+Invoke uWSGI without sudo and without --uid / --gid, but with chmod-socket set to 666
+
+    uwsgi --chmod-socket=666 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application
+
+
+Second Working Alternate (no sudo, but requires ACL. Not recommended, as it's more complex.):
+
+This also works without sudo iff you use setfacl to set who owns the socket file.
+
+The weird part is that you are setting up setfacl with USER permissions,
+but it's the group permission that you are chmodding to.
+
+    # Specify that the www-data user has full access to any new files
+    # that are created in /run/uwsgi
+    setfacl -Rm d:u:www-data:rwx,u:www-data:rwx /run/uwsgi
+    #
+    uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application
+
+
+#### Non-Working Nginx Configurations
+
+Invoking uWSGI with --uid=ubuntu / --gid=ubuntu
+
+This strategy worked sometimes, but not always. Using --gid=www-data makes more sense
+anyway.
+
+
+#### As A Last Resort
+
+If you are still getting "Permission denied" error in the Nginx error.log, try manually changing the permissions on the socket file _after uWSGI is already running_.
+
+    chmod 777 /run/uwsgi/simple.sock
+
+This will at least give you a small win. It's not a permanent solution
+because each time uWSGI starts up it will reset the permissions
+on the socket.
 
 
 
-
-
-
-create a symlink
-
-
-Nginx and your app will communicate via a unix socket file.
-Both Nginx and uWSGI need to know where the socket file
-is located, and both must be able to access it.
-
-
-### Two Users of Importance
-
-There are two users of importance in this equation. One is the user that
-runs nginx (www-data in my case). The other is the user your app masquerades as
-via uWSGI. (ubuntu in my case).
-
-
-### Permissions
-
-uWSGI will be the one to create the socket file, and it will set certain
-permissions on the file. Obviously since uWSGI created the file, it will
-have no trouble accessing it.
-
-By default, uWSGI creates the socket file with 755 permissions.
-With those permissions, the user of nginx will not be able to access the file.
 
 Assuming you
 If you
@@ -512,17 +559,6 @@ uwsgi and ngxinx must run as the same user.
 
 
 
-As A Last Resort
-----------------
-
-If you can't get it to work any other way, try manually chmodding the socket
-file to 777. If that makes it work, you know you're up against a permissions
-error.
-
-Each time you start uwsgi, it resets the permissions on the socket file.
-It sets them to 755 unless you specify the --chmod-socket option.
-
-So you really do need to find a persistent solution.
 
 
 Things that DID NOT WORK for Me
