@@ -14,8 +14,9 @@ those hurdles are:
 2. Make Python Packages Available to Masquerading User
 3. Getting Nginx Write Access to the Unix Socket
 
+We will also discuss common pitfalls for each hurdle and how to get past them.
 
-The code used for this tutorial is available at //github.com/jackdesert/simple-uwsgi-example.
+The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-example.
 
 Installation (The Easy Part)
 ----------------------------
