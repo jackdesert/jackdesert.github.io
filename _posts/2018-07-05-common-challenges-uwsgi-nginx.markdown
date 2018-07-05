@@ -1,7 +1,7 @@
 Common Challenges when Deploying a Python app with uWSGI and Nginx
 ==================================================================
 
-So you wrote a shiny new wsgi application and you want to
+So you wrote a shiny new WSGI application and you want to
 put it out there in the world where it can do some good. Ideally, you want
 it to autostart (systemd) so if you server reboots, your app comes up
 automatically.
@@ -10,7 +10,9 @@ This multi-part tutorial will go over in detail the pieces that are
 required in order to get all the pieces working end to end. Specifically,
 those hurdles are:
 
-1. Invoke uWSGI with proper Entry Point and Callable
+1. uWSGI Invocation with Proper Entry Point and Callable
+2. Make Python Packages Available to Masquerading User
+3. Getting Nginx Write Access to the Unix Socket
 
 
 The code used for this tutorial is available at .
@@ -41,8 +43,8 @@ Let's fetch the tutorial source code.
 ---
 ---
 
-Hurdle 1: Invocation with Entry Point and Callable
---------------------------------------------------
+Hurdle 1: uWSGI Invocation with Proper Entry Point and Callable
+----------------------------------------------------------------
 
 Now the fun begins. Take a look at simple/wsgi.py. This is our wsgi entry point.
 
@@ -226,8 +228,8 @@ OR if I rename myflask.py to myotherflask.py:
 
 
 
-Hurdle #2: Python Packages Unavailable
---------------------------------------
+Hurdle #2: Make Python Packages Available to Masquerading User
+--------------------------------------------------------------
 
 You may encounter this error, which simply means that the 'flask'
 package is unavailable:
@@ -535,5 +537,5 @@ on the socket.
 Next Steps
 ----------
 
-The next article will be how to add Emperor to this mix. Stay tuned.
+The next article will be how to add Emperor and Systemd to this mix. Stay tuned.
 
