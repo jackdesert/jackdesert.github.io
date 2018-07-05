@@ -6,7 +6,7 @@ put it out there in the world where it can do some good. Ideally, you want
 it to autostart (systemd) so if you server reboots, your app comes up
 automatically.
 
-This is article 1 of 2-part-series.  This article details the hurdles that
+This is article 1 of a 2-part-series.  This article details the hurdles that
 you must cross to deploy your WSGI Python app using uWSGI and Nginx.
 
 These be the hurdles:
@@ -20,12 +20,19 @@ We will also discuss common pitfalls for each hurdle and how to get past them.
 The next article will be released by the end of July, 2018. It will
 add Systemd and Emperor to the mix.
 
-The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-example.
+The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-nginx-tutorial.
 
 Installation (The Easy Part)
 ----------------------------
 
-This tutorial was run on an EC2 instance running Ubuntu 16.04.
+This tutorial was run on an t2.micro EC2 instance running Ubuntu 16.04.
+If you are using something that is not an ubuntu derivative, you will
+need to change the `apt install` to something appropriate for your OS.
+
+
+Log in to the box where you want to run this tutorial.
+
+    ssh ubuntu@some-amazon-instance
 
 Install uwsgi and the python(3) plugin we will need.
 
@@ -42,7 +49,7 @@ Now you have an executable called uwsgi
 Let's fetch the tutorial source code.
 
     cd
-    git clone github.com/jackdesert/simple-uwsgi-example simple
+    git clone github.com/jackdesert/jackdesert/simple-uwsgi-nginx-tutorial
 
 
 ---
