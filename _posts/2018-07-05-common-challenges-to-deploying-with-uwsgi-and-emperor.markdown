@@ -1,5 +1,5 @@
-Common Challenges to Deploying a Python app using uWSGI and Nginx (and later Emperor)
-=================================================================
+Common Challenges to Deploying a Python app using uWSGI and Nginx
+==================================================================
 
 So you wrote a shiny new wsgi application and you want to
 put it out there in the world where it can do some good. Ideally, you want
@@ -37,6 +37,9 @@ Let's fetch the tutorial source code.
     cd
     git clone github.com/jackdesert/simple-uwsgi-example simple
 
+
+---
+---
 
 Hurdle 1: Invocation with Entry Point and Callable
 --------------------------------------------------
@@ -214,7 +217,8 @@ OR if I rename myflask.py to myotherflask.py:
 
 
 
-
+---
+---
 
 
 
@@ -311,6 +315,13 @@ resulted in being able to import flask if running python as www-data thusly:
 I may have had to disable pip cache along the way. But the flask package
 was still unavailable when the app was run via uWSGI, masquerading as www-data.
 
+
+
+
+
+
+---
+---
 
 
 
@@ -518,51 +529,11 @@ on the socket.
 
 
 
+---
+---
 
-Assuming you
-If you
-If you don't instruct uWSGI as to which mode to setto chmod the socket file to something
-By default, uwsgi sets the permissions on the socket
-file to 755, but you can
-When uWSGI starts your app, it
+Next Steps
+----------
 
-Both of these use
-have read/write access to the unix socket file.
-
-In practice, it appears that perhaps only write access is required.
-
-
-
-Default Behavior
-----------------
-
-
-FOR THIS TO WORK
-----------------
-
-The only way I've been able to get this to work is to explicitly
-invoke uwsgi with --chmod-socket=020 or greater
-It appears to be the groups write permission that is required.
-
-Note this is with uwsgi being invoked as the ubuntu user and nginx running as the
-www-data user.
-
-
-Errors You Will Get in Nginx Error Log If Not Setup Correctly
--------------------------------------------------------------
-
-https://stackoverflow.com/questions/21820444/nginx-error-13-permission-denied-while-connecting-to-upstream
-https://stackoverflow.com/questions/22071681/permission-denied-nginx-and-uwsgi-socket
-uwsgi and ngxinx must run as the same user.
-
-
-
-
-
-
-
-Things that DID NOT WORK for Me
-------------------------
-
-1. Grant rwx USER rights through ACL. (Made no difference)
+The next article will be how to add Emperor to this mix. Stay tuned.
 
