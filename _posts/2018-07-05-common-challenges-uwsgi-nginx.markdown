@@ -15,7 +15,7 @@ those hurdles are:
 3. Getting Nginx Write Access to the Unix Socket
 
 
-The code used for this tutorial is available at .
+The code used for this tutorial is available at //github.com/jackdesert/simple-uwsgi-example.
 
 Installation (The Easy Part)
 ----------------------------
