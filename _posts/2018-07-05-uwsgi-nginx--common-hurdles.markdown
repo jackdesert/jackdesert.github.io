@@ -1,4 +1,4 @@
-Common Hurdles when Deploying a Python app with uWSGI and Nginx
+Common Hurdles when Deploying a Python App with uWSGI and Nginx
 ===============================================================
 
 So you wrote a shiny new WSGI application and you want to
@@ -6,15 +6,19 @@ put it out there in the world where it can do some good. Ideally, you want
 it to autostart (systemd) so if you server reboots, your app comes up
 automatically.
 
-This multi-part tutorial will go over in detail the pieces that are
-required in order to get all the pieces working end to end. Specifically,
-those hurdles are:
+This is article 1 of 2-part-series.  This article details the hurdles that
+you must cross to deploy your WSGI Python app using uWSGI and Nginx.
+
+These be the hurdles:
 
 1. uWSGI Invocation with Proper Entry Point and Callable
 2. Make Python Packages Available to Masquerading User
 3. Getting Nginx Write Access to the Unix Socket
 
 We will also discuss common pitfalls for each hurdle and how to get past them.
+
+The next article will be released by the end of July, 2018. It will
+add Systemd and Emperor to the mix.
 
 The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-example.
 
