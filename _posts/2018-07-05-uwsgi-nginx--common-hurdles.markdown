@@ -22,6 +22,7 @@ add Systemd and Emperor to the mix.
 
 The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-nginx-tutorial.
 
+
 Installation (The Easy Part)
 ----------------------------
 
@@ -49,7 +50,7 @@ Now you have an executable called uwsgi
 Let's fetch the tutorial source code.
 
     cd
-    git clone github.com/jackdesert/jackdesert/simple-uwsgi-nginx-tutorial
+    git clone github.com/jackdesert:jackdesert/simple-uwsgi-nginx-tutorial
 
 
 ---
@@ -126,6 +127,9 @@ If you get an error:
 
 Then skip ahead to Hurdle 2.
 
+
+
+
 ### Pitfall #1a: Entry Point Improperly Referenced
 
 Remember this part of the invocation?
@@ -146,6 +150,7 @@ and see what happens.
     ImportError: No module named 'wsgi'
     unable to load app 0 (mountpoint='/') (callable not found or import error)
     *** no app loaded. going in full dynamic mode ***
+
 
 
 ### Pitfall #1b: Callable Not Found
@@ -169,7 +174,7 @@ and this line from myflask.py:
     application = Flask(__name__)
     ...
 
-There are four pieces that must align. In our case they are as follows:
+There are three pieces that must align. In our case they are as follows:
 
   1. the "application" part (after the colon) in the mount option
   2. "application" is imported in wsgi.py
@@ -265,6 +270,10 @@ If you are lucky, that's all it will take to get past this hurdle.
 
 
 ### Pitfall 2a: Python Package is Installed, but Unavailable to (Regular) User X
+
+If you're here, it means that the standard way of installing packages
+via pip did not make those packages available to your masquerading user.
+
 
 Remember these options from the invocation:
 
