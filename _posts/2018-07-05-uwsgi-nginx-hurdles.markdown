@@ -22,6 +22,7 @@ add Systemd and Emperor to the mix.
 
 The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-nginx-tutorial.
 
+---
 
 Installation (The Easy Part)
 ----------------------------
@@ -54,10 +55,10 @@ Let's fetch the tutorial source code.
 
 
 ---
----
 
 Hurdle 1: uWSGI Invocation with Proper Entry Point and Callable
 ----------------------------------------------------------------
+![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
 
 Now the fun begins. Take a look at simple/wsgi.py. This is our wsgi entry point.
 
@@ -237,7 +238,6 @@ OR if I rename myflask.py to myotherflask.py:
 
 
 ---
----
 
 
 
@@ -247,6 +247,7 @@ OR if I rename myflask.py to myotherflask.py:
 
 Hurdle #2: Make Python Packages Available to Masquerading User
 --------------------------------------------------------------
+![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
 
 You may encounter this error, which simply means that the 'flask'
 package is unavailable:
@@ -344,13 +345,13 @@ was still unavailable when the app was run via uWSGI, masquerading as www-data.
 
 
 ---
----
 
 
 
 
 Hurdle #3: Getting Nginx to Read/Write to the Unix Socket
 ---------------------------------------------------------
+![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
 
 Now that you have crossed Hurdles 1 and 2, your app is being run by uWSGI
 and the required modules are accessible to your app. You are ready to connect
@@ -552,7 +553,6 @@ on the socket.
 
 
 
----
 ---
 
 Next Steps
