@@ -1,12 +1,14 @@
-Common Hurdles when Deploying a Python App with uWSGI and Nginx
-===============================================================
+Common Hurdles to Deploying uWSGI Apps (Part 1: Invocation)
+===========================================================
 
 So you wrote a shiny new WSGI application and you want to
 put it out there in the world where it can do some good. Ideally, you want
 it to autostart (systemd) so if you server reboots, your app comes up
 automatically.
 
-This is article 1 of a 2-part-series.  This article details the hurdles that
+This is article 1 of a 4-part-series. Here are the links to [part 2][2], [part 3][3], and [part 4][4].
+
+This article details the hurdles that
 you must cross to deploy your WSGI Python app using uWSGI and Nginx.
 
 These be the hurdles:
@@ -344,5 +346,10 @@ was still unavailable when the app was run via uWSGI, masquerading as www-data.
 Next Steps
 ----------
 
-The next article will be how to add Nginx to this mix.
+The [next article][2] will be how to add Nginx to this mix.
 
+
+[1]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-1.md %}
+[2]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-2.md %}
+[3]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-3.md %}
+[4]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-4.md %}

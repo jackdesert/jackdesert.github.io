@@ -1,7 +1,8 @@
-Adding Empereror to the Mix
-===========================
+Common Hurdles to Deploying uWSGI Apps (Part 3: Emperor)
+========================================================
 
-This is part 2 of a 2-part series. Click xxx to see the first article.
+This is article 3 of a 4-part-series. Here are the links to [part 1][1], [part 2][2], and [part 4][4].
+
 
 Now that uWSGI is running your application, let's take the next logical
 step, which is to get it to autostart via Emperor and Systemd.
@@ -275,5 +276,12 @@ If things go well, you will see this in the uwsgi.log:
 Next Steps
 ----------
 
-The next article shows how to add Emperor to this mix.
+
+The [next article][4] shows how to add Systemd to the mix.
+
+
+[1]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-1.md %}
+[2]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-2.md %}
+[3]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-3.md %}
+[4]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-4.md %}
 

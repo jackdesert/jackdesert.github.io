@@ -1,5 +1,8 @@
-Common Hurdles when Deploying a Python App with uWSGI and Nginx
-===============================================================
+
+Common Hurdles to Deploying uWSGI Apps (Part 2: Nginx)
+======================================================
+
+This is article 2 of a 4-part-series. Here are the links to [part 1][1], [part 3][3], and [part 4][4].
 
 
 Hurdle #3: Getting Nginx to Read/Write to the Unix Socket
@@ -211,5 +214,11 @@ on the socket.
 Next Steps
 ----------
 
-The next article shows how to add Emperor to this mix.
+The [next article][3] shows how to add Emperor to the mix.
+
+
+[1]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-1.md %}
+[2]: {% link _posts/2018-07-05-common-hurdles-to-deploying-uwsgi-apps-part-2.md %}
+[3]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-3.md %}
+[4]: {% link _posts/2018-07-06-common-hurdles-to-deploying-uwsgi-apps-part-4.md %}
 

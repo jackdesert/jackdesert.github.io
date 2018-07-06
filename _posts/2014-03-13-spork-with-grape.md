@@ -1,5 +1,5 @@
-Spork with Grape and Rails
-==========================
+Spork with Grape
+================
 
 Spork saves you a lot of time in the feedback loop of test-driven development. But in order for it to work with Grape, spork needs to reload your files between test runs.
 
