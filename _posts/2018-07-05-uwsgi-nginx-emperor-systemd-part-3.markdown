@@ -270,35 +270,10 @@ If things go well, you will see this in the uwsgi.log:
   Thu Jul  5 13:47:00 2018 - [emperor] vassal simple.ini is ready to accept requests
 
 
-Verify that your socket file was created and has appropriate permissions
-------------------------------------------------------------------------
+---
 
+Next Steps
+----------
 
-
-
-
-
-
-Systemd Unit File
------------------
-
-    [Unit]
-    Description=uWSGI Emperor
-    After=syslog.target
-
-    [Service]
-    ExecStart=/usr/bin/uwsgi --ini /etc/uwsgi/emperor.ini
-    # Requires systemd version 211 or newer
-    RuntimeDirectory=uwsgi
-    Restart=always
-    KillSignal=SIGQUIT
-    Type=notify
-    StandardError=syslog
-    NotifyAccess=all
-
-    [Install]
-    WantedBy=multi-user.target
-
-
-
+The next article shows how to add Emperor to this mix.
 
