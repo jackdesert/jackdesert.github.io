@@ -1,7 +1,10 @@
 Blog
 ====
 
-Github URL: https://github.com/jackdesert/jackdesert.github.io
+I store this in ~/r/blog, but the actual github url is the standard one
+for github pages:
+
+https://github.com/jackdesert/jackdesert.github.io
 
 
 
@@ -60,3 +63,5 @@ I copied this file:
     _layouts/default.html
 
 from the gem so I could edit it.
+
+
