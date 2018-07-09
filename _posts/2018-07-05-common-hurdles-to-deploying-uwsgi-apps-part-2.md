@@ -46,7 +46,7 @@ so that nginx looks in the wrong place for the socket:
 
     # simple-nginx.conf
     ...
-    uwsgi_pass unix:/run/uwsgi/not-so-simple.sock;
+    uwsgi_pass unix:/home/ubuntu/simple/tmp/not-so-simple.sock;
     ...
 
 
@@ -85,13 +85,13 @@ And in the window where you are tailing the nginx logs, you will see
 
     ==> error.log <==
     2018/07/05 17:26:44 [notice] 28601#28601: signal process started
-    2018/07/05 17:26:48 [crit] 28602#28602: *298 connect() to unix:/run/uwsgi/not-so-simple.sock failed (2: No such file or directory) while connecting to upstream, client: 127.0.0.1, server: _, request: "GET / HTTP/1.1", upstream: "uwsgi://unix:/run/uwsgi/not-so-simple.sock:", host: "localhost"
+    2018/07/05 17:26:48 [crit] 28602#28602: *298 connect() to unix:/home/ubuntu/simple/tmp/not-so-simple.sock failed (2: No such file or directory) while connecting to upstream, client: 127.0.0.1, server: _, request: "GET / HTTP/1.1", upstream: "uwsgi://unix:/home/ubuntu/simple/tmp/not-so-simple.sock:", host: "localhost"
 
     ==> access.log <==
     127.0.0.1 - - [05/Jul/2018:17:26:48 +0000] "GET / HTTP/1.1" 502 182 "-" "curl/7.47.0"
 
 
-Notice that is is saying "No such file or directory" regarding the file "/run/uwsgi/not-so-simple.sock".
+Notice that is is saying "No such file or directory" regarding the file "/home/ubuntu/simple/tmp/not-so-simple.sock".
 
 Once you get nginx and your uWSGI app pointed at the same socket file, this error
 will go away. If you changed your nginx config file, you can revert it now
@@ -181,19 +181,6 @@ Invoke uWSGI without sudo and without --uid / --gid, but with chmod-socket set t
 
     uwsgi --chmod-socket=666 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application
 
-
-Second Working Alternate (no sudo, but requires ACL. Not recommended, as it's more complex.):
-
-This also works without sudo iff you use setfacl to set who owns the socket file.
-
-The weird part is that you are setting up setfacl with USER permissions,
-but it's the group permission that you are chmodding to.
-
-    # Specify that the www-data user has full access to any new files
-    # that are created in /run/uwsgi
-    setfacl -Rm d:u:www-data:rwx,u:www-data:rwx /run/uwsgi
-    #
-    uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application
 
 
 <a name='non-working-configs'></a>
