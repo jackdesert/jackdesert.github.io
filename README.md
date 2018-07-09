@@ -7,6 +7,15 @@ for github pages:
 https://github.com/jackdesert/jackdesert.github.io
 
 
+Variables
+---------
+
+see https://jekyllrb.com/docs/variables/
+
+  page.path  # post's github url
+
+
+
 Linking to Posts Internally
 ---------------------------
 
@@ -39,6 +48,7 @@ for uWSGI).
 
 My recommendation is to include the title in the metadata,
 and to print that metadata in the TOC.
+
 
 
 Generate Site and Serve Locally

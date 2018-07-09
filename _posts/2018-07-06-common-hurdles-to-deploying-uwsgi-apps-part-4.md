@@ -14,13 +14,13 @@ Systemd Unit File
 
 Let's add a symlink to our emperor's systemd unit file:
 
-    cd /etc/systemd/system
+    cd /lib/systemd/system
     sudo ln -s ~/simple/config/emperor.uwsgi.service
 
 
 Here is the unit file:
 
-    # /etc/systemd/system/emperor.uwsgi.service
+    # /lib/systemd/system/emperor.uwsgi.service
     [Unit]
     Description=uWSGI Emperor
     After=syslog.target

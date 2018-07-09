@@ -8,13 +8,26 @@ layout: default
 <p class="view">by {{ page.author | default: site.author }}</p>
 
 {{content}}
+<hr>
+
+
+<p>
+    If you find some piece of this article unclear or incorrect, I do welcome
+    <a href='https://github.com/jackdesert/jackdesert.github.io/blob/master/{{ page.path }}'>pull requests</a>
+    and
+    emails: <a href='mailto:Jack%20Desert%20<{{ site.email }}>?subject=Comments%20on%20{{ page.slug }}'>{{ site.email }}</a>.
+
+
+
+
+{% if page.next %}
+    <br>
+    <br>
+    Next up: <a href='{{ page.next.url }}'>Next: {{ page.next.title }}</a>
+{% endif %}
+
+
 
 {% if page.tags %}
   <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
 {% endif %}
-
-<p>If you're having trouble or if some part of this article is unclear or incorrect, don't hesitate to drop me an email: <a href='mailto:{{ site.email }}'>{{ site.email }}</a>.
-
-
-
-

@@ -19,7 +19,7 @@ These be the hurdles:
 
 We will also discuss common pitfalls for each hurdle and how to get past them.
 
-The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-nginx-tutorial.
+The code used for this tutorial is available at [https://github.com/jackdesert/simple-uwsgi-nginx-tutorial](https://github.com/jackdesert/simple-uwsgi-nginx-tutorial).
 
 ---
 
