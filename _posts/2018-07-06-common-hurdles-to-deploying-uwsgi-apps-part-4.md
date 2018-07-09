@@ -1,13 +1,14 @@
 Common Hurdles to Deploying uWSGI Apps (Part 4: Systemd)
 ========================================================
 
-This is article 4 of a 4-part-series. Here are the links to [part 1][1], [part 2][2], and [part 3][3].
+This is article 1 of a 4-part-series. Here are the links to the other articles: [1. Invocation][1], [2. Nginx][2], [3. Emperor][3], and [4. Systemd][4].
 
 Now that you have been able to start the uWSGI Emperor and have it start
 your app using .ini files, let's take the next logical
 step, which is to get the Emperor to autostart via Systemd.
 
 
+<a name='systemd-unit'></a>
 Systemd Unit File
 -----------------
 
@@ -42,6 +43,7 @@ Note that the ExecStart option is exactly the same as the command line
 invocation of uWSGI Emperoror in the last article.
 
 
+<a name='start-emperor'></a>
 Start The uWSGI Emperor
 -----------------------
 
@@ -66,8 +68,9 @@ These are the system logs for a successful start.
     Jul 06 14:45:49 ip-172-31-14-5 sudo[31457]: pam_unix(sudo:session): session closed for user root
 
 
-Verify that Nginx
------------------
+<a name='verify-nginx'></a>
+Verify that Nginx Connects
+--------------------------
 
 As in the second and third articles, we want to make sure that we can curl localhost
 and get a valid response back from Nginx and your app.
@@ -76,6 +79,7 @@ and get a valid response back from Nginx and your app.
 
 If you get an error when curling localhost, use some of the tools you learned in articles 2 and 3. That is, verify the owner, group, and permissions of the socket file.
 
+<a name='debuggin'></a>
 Additional Debugging
 --------------------
 
@@ -109,6 +113,7 @@ If these are not all working for you, revisit the section that introduced them. 
 
 
 
+<a name='autostart'></a>
 Autostart on Reboot
 -------------------
 

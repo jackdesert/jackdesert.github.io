@@ -2,9 +2,10 @@
 Common Hurdles to Deploying uWSGI Apps (Part 2: Nginx)
 ======================================================
 
-This is article 2 of a 4-part-series. Here are the links to [part 1][1], [part 3][3], and [part 4][4].
+This is article 1 of a 4-part-series. Here are the links to the other articles: [1. Invocation][1], [2. Nginx][2], [3. Emperor][3], and [4. Systemd][4].
 
 
+<a name='hurdle-3'></a>
 Hurdle #3: Getting Nginx to Read/Write to the Unix Socket
 ---------------------------------------------------------
 ![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
@@ -37,6 +38,7 @@ Note that it contains the same path to the unix socket file that you used
 when invoking uWSGI.
 
 
+<a name='pitfall-3a'></a>
 ### Pitfall 3a: Nginx Cannot Find Socket File
 
 To simulate this error, let's change the uwsgi_pass line in simple-nginx.conf
@@ -100,8 +102,10 @@ will go away. If you changed your nginx config file, you can revert it now
 
 
 
+<a name='pitfall-3b'></a>
 ### Pitfall 3b: Permission Denied when Nginx Connects to Socket
 
+<a name='background'></a>
 #### A Bit of Background on uWSGI and Nginx
 There are two users of importance in this equation. One is the user that
 runs nginx (www-data in my case). The other is the user your app masquerades as
@@ -114,6 +118,7 @@ have no trouble accessing it.
 By default, uWSGI creates the socket file with 755 permissions.
 With those permissions, the user of nginx are not be able to access the file.
 
+<a name='on-to-soln'></a>
 #### On to the Pitfall and its Solution
 Once you've made sure both uWSGI and Nginx are pointed at the same socket file,
 Nginx may still give you a Permission Denied error when it goes to access the socket.
@@ -165,6 +170,7 @@ the only thingIn the working version from the beginning of this articleIf you ar
 
 
 
+<a name='other-configs'></a>
 #### Other (Working) uWSGI / Nginx Configurations
 
 First Working Alternate (no sudo, but open to all users):
@@ -189,6 +195,7 @@ but it's the group permission that you are chmodding to.
     uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application
 
 
+<a name='non-working-configs'></a>
 #### Non-Working Nginx Configurations
 
 Invoking uWSGI with --uid=ubuntu / --gid=ubuntu
@@ -197,6 +204,7 @@ This strategy worked sometimes, but not always. Using --gid=www-data makes more 
 anyway.
 
 
+<a name='last-resort'></a>
 #### As A Last Resort
 
 If you are still getting "Permission denied" error in the Nginx error.log, try manually changing the permissions on the socket file _after uWSGI is already running_.

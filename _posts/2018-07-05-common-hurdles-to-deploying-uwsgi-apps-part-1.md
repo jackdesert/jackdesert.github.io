@@ -6,7 +6,7 @@ put it out there in the world where it can do some good. Ideally, you want
 it to autostart (systemd) so if you server reboots, your app comes up
 automatically.
 
-This is article 1 of a 4-part-series. Here are the links to [part 2][2], [part 3][3], and [part 4][4].
+This is article 1 of a 4-part-series. Here are the links to the other articles: [1. Invocation][1], [2. Nginx][2], [3. Emperor][3], and [4. Systemd][4].
 
 This article details the hurdles that
 you must cross to deploy your WSGI Python app using uWSGI and Nginx.
@@ -26,8 +26,8 @@ The code used for this tutorial is available at https://github.com/jackdesert/si
 
 ---
 
-Installation (The Easy Part)
-----------------------------
+<a name='install'></a>Installation (The Easy Part)
+--------------------------------------------------
 
 This tutorial was run on an t2.micro EC2 instance running Ubuntu 16.04.
 If you are using something that is not an ubuntu derivative, you will
@@ -58,8 +58,8 @@ Let's fetch the tutorial source code.
 
 ---
 
-Hurdle 1: uWSGI Invocation with Proper Entry Point and Callable
-----------------------------------------------------------------
+<a name='hurdle-1'></a>Hurdle 1: uWSGI Invocation with Proper Entry Point and Callable
+---------------------------------------------------------------------------------------
 ![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
 
 Now the fun begins. Take a look at simple/wsgi.py. This is our wsgi entry point.
@@ -132,7 +132,7 @@ Then skip ahead to Hurdle 2.
 
 
 
-
+<a name='pitfall-1a'></a>
 ### Pitfall #1a: Entry Point Improperly Referenced
 
 Remember this part of the invocation?
@@ -155,7 +155,7 @@ and see what happens.
     *** no app loaded. going in full dynamic mode ***
 
 
-
+<a name='pitfall-1b'></a>
 ### Pitfall #1b: Callable Not Found
 
 
@@ -247,6 +247,7 @@ OR if I rename myflask.py to myotherflask.py:
 
 
 
+<a name='hurdle-2'></a>
 Hurdle #2: Make Python Packages Available to Masquerading User
 --------------------------------------------------------------
 ![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
@@ -272,6 +273,7 @@ No problem, right? Let's install flask via pip.
 If you are lucky, that's all it will take to get past this hurdle.
 
 
+<a name='pitfall-2a'></a>
 ### Pitfall 2a: Python Package is Installed, but Unavailable to (Regular) User X
 
 If you're here, it means that the standard way of installing packages
@@ -280,8 +282,8 @@ via pip did not make those packages available to your masquerading user.
 
 Remember these options from the invocation:
 
-  * --uid ubuntu       # masquerade as the ubuntu user
-  * --gid ubuntu       # masquerade as the ubuntu group
+  * --uid ubuntu       # masquerade as the ubuntu   user
+  * --gid www-data     # masquerade as the www-data group
 
 
 This example uses the easy version. That is, uwsgi masquerades as ubuntu,
@@ -300,6 +302,7 @@ then install your packages.
     python3 -m pip install --user flask
 
 
+<a name='pitfall-2b'></a>
 ### Pitfall 2b: Python Package is Installed, but Unavailable to (NONRegular) User Y
 
 

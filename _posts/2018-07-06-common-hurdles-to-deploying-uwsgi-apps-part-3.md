@@ -1,12 +1,13 @@
 Common Hurdles to Deploying uWSGI Apps (Part 3: Emperor)
 ========================================================
 
-This is article 3 of a 4-part-series. Here are the links to [part 1][1], [part 2][2], and [part 4][4].
+This is article 1 of a 4-part-series. Here are the links to the other articles: [1. Invocation][1], [2. Nginx][2], [3. Emperor][3], and [4. Systemd][4].
 
 
 Now that uWSGI is running your application, let's take the next logical
 step, which is to get it to autostart via Emperor and Systemd.
 
+<a name='install'></a>
 Installation
 ------------
 
@@ -19,9 +20,11 @@ git repo as the first article, https: https://github.com/jackdesert/simple-uwsgi
 
 
 
+<a name='step-1'></a>
 First Step: Run uWSGI Emperor from Command Line
 -----------------------------------------------
 
+<a name='emperor-ini'></a>
 ### Emperor .ini file
 
 https://stackoverflow.com/questions/41038159/cant-run-uwsgi-ini-file-with-systemd-emperor
@@ -50,6 +53,7 @@ Here are the contents of emperor.ini:
     logto = /var/log/uwsgi/emperor.log
 
 
+<a name='invoke-emperor'></a>
 ### Invoke uWSGI Emperor
 
 To invoke the emperor from command line:
@@ -85,6 +89,7 @@ Note the location of "logto" in emperor.ini.
 
 
 
+<a name='step-2'></a>
 Second Step: Add Your WSGI App as a Vassal
 ------------------------------------------
 
@@ -183,6 +188,7 @@ And we will also look in the log for this particular vassal:
 
 
 
+<a name='step-3'></a>
 Third Step: Verify that Nginx is communicating with your Vassal
 ---------------------------------------------------------------
 And to verify that it's actually serving requests, let's curl localhost:
@@ -191,6 +197,7 @@ And to verify that it's actually serving requests, let's curl localhost:
 
 If you get
 
+<a name='hurdle-1'></a>
 ### Hurdle #1: Allow Nginx to Access the Socket
 
 Just as in the previous article, you may run into this issue again.
@@ -208,6 +215,7 @@ settings be ignored.
 We expect the group "write" bit to be set, since in simple.ini specified chmod-socket 020.
 
 
+<a name='chmod-socket'></a>
 ### Changing chmod-socket
 
 Touching the vassal .ini file is enough to cause the vassal to reload.
@@ -225,6 +233,7 @@ As soon as you made the symlink to simple.ini
 
 
 
+<a name='debugging'></a>
 ### Additional Debugging
 
 There are other issues you may run into. Luckily, the error messages

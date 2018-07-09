@@ -26,6 +26,8 @@ github_username:  jackdesert
 
 # Build settings
 markdown: kramdown
+kramdown:
+  auto_ids: false
 theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
