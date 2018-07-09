@@ -164,7 +164,7 @@ And we will also look in the log for this particular vassal:
     detected max file descriptor number: 1024
     lock engine: pthread robust mutexes
     thunder lock: disabled (you can enable it with --thunder-lock)
-    uwsgi socket 0 bound to UNIX address /run/uwsgi/simple.sock fd 3
+    uwsgi socket 0 bound to UNIX address /home/simple/tmp/simple.sock fd 3
     Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
     Python main interpreter initialized at 0x1c5e1e0
     python threads support enabled
@@ -203,7 +203,7 @@ If you get
 Just as in the previous article, you may run into this issue again.
 The key is to verify the ownership and permissions on the socket file.
 
-    ls -al /run/uwsgi/simple.sock
+    ls -al ~/simple/tmp/simple.sock
     # s----w---- 1 ubuntu www-data 0 Jul  6 13:48 simple.sock
 
 We expect the owner to be ubuntu, group to be www-data.

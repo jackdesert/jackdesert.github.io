@@ -94,7 +94,7 @@ either of which will fire up flask with its built-in, non-production-grade webse
 But instead, let's invoke the entry point from uWSGI. But first, let's create
 the directory where we want the socket file to live.
 
-    sudo uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s /run/uwsgi/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid www-data
+    sudo uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid www-data
 
 
 Let's go over the options in the invocation

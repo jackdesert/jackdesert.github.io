@@ -30,7 +30,7 @@ Here is the nginx config file:
 
         location / {
             include uwsgi_params;
-            uwsgi_pass unix:/run/uwsgi/simple.sock;
+            uwsgi_pass unix:/home/ubuntu/simple/tmp/simple.sock;
         }
     }
 
@@ -113,7 +113,7 @@ Nginx may still give you a Permission Denied error when it goes to access the so
 
 To simulate this error, I'm going to remove the "chmod-socket=020" part of the uWSGI invocation, so my uWSGI invocation now looks like this:
 
-    sudo uwsgi --enable-threads --plugin=python3 -s /run/uwsgi/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid www-data
+    sudo uwsgi --enable-threads --plugin=python3 -s ~/simple/tmp/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid www-data
 
 This means the uWSGI starts, the socket file will have 755 permissions,
 which means the group (www-data) will not be able to write to it.
@@ -130,7 +130,7 @@ Here is the error we get:
 
 
     ==> error.log <==
-    2018/07/05 17:30:59 [crit] 28610#28610: *302 connect() to unix:/run/uwsgi/simple.sock failed (13: Permission denied) while connecting to upstream, client: 127.0.0.1, server: _, request: "GET / HTTP/1.1", upstream: "uwsgi://unix:/run/uwsgi/simple.sock:", host: "localhost"
+    2018/07/05 17:30:59 [crit] 28610#28610: *302 connect() to unix:/home/ubuntu/tmp/simple.sock failed (13: Permission denied) while connecting to upstream, client: 127.0.0.1, server: _, request: "GET / HTTP/1.1", upstream: "uwsgi://unix:/home/ubuntu/tmp/simple.sock:", host: "localhost"
 
     ==> access.log <==
     127.0.0.1 - - [05/Jul/2018:17:30:59 +0000] "GET / HTTP/1.1" 502 182 "-" "curl/7.47.0"
@@ -210,7 +210,7 @@ anyway.
 
 If you are still getting "Permission denied" error in the Nginx error.log, try manually changing the permissions on the socket file _after uWSGI is already running_.
 
-    chmod 777 /run/uwsgi/simple.sock
+    chmod 777 ~/simple/tmp/simple.sock
 
 This will at least give you a small win. It's not a permanent solution
 because each time uWSGI starts up it will reset the permissions
