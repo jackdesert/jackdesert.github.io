@@ -19,9 +19,6 @@ These be the hurdles:
 
 We will also discuss common pitfalls for each hurdle and how to get past them.
 
-The next article will be released by the end of July, 2018. It will
-add Systemd and Emperor to the mix.
-
 The code used for this tutorial is available at https://github.com/jackdesert/simple-uwsgi-nginx-tutorial.
 
 ---
@@ -97,10 +94,7 @@ either of which will fire up flask with its built-in, non-production-grade webse
 But instead, let's invoke the entry point from uWSGI. But first, let's create
 the directory where we want the socket file to live.
 
-    sudo mkdir /run/uwsgi
-    sudo chown ubuntu:ubuntu /run/uwsgi
-
-    sudo uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s /run/uwsgi/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid ubuntu
+    sudo uwsgi --chmod-socket=020 --enable-threads --plugin=python3 -s /run/uwsgi/simple.sock --manage-script-name --mount /=wsgi:application --uid ubuntu --gid www-data
 
 
 Let's go over the options in the invocation
@@ -114,7 +108,7 @@ Let's go over the options in the invocation
   * --mount /=wsgi:application   # "wsgi" means wsgi.py is the name of the ENTRY POINT
                                  # :application must match the name of the CALLABLE in ENTRY POINT
   * --uid ubuntu       # masquerade as the ubuntu user
-  * --gid ubuntu       # masquerade as the ubuntu group
+  * --gid www-data     # masquerade as the www-data group
 
 
 If you are lucky and this works on the first try, you will get this:

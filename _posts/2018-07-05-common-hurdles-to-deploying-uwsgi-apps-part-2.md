@@ -6,7 +6,7 @@ This is article 1 of a 4-part-series. Here are the links to the other articles: 
 
 
 <a name='hurdle-3'></a>
-Hurdle #3: Getting Nginx to Read/Write to the Unix Socket
+Hurdle #3: Allow Nginx to Write to the Unix Socket
 ---------------------------------------------------------
 ![Image](https://thumbs.dreamstime.com/z/hurdle-barrier-28185719.jpg)
 
@@ -105,18 +105,6 @@ will go away. If you changed your nginx config file, you can revert it now
 <a name='pitfall-3b'></a>
 ### Pitfall 3b: Permission Denied when Nginx Connects to Socket
 
-<a name='background'></a>
-#### A Bit of Background on uWSGI and Nginx
-There are two users of importance in this equation. One is the user that
-runs nginx (www-data in my case). The other is the user your app masquerades as
-via uWSGI. (ubuntu in my case).
-
-uWSGI will be the one to create the socket file, and it will set certain
-permissions on the file. Obviously since uWSGI created the file, it will
-have no trouble accessing it.
-
-By default, uWSGI creates the socket file with 755 permissions.
-With those permissions, the user of nginx are not be able to access the file.
 
 <a name='on-to-soln'></a>
 #### On to the Pitfall and its Solution
@@ -169,6 +157,19 @@ the permissions of "020" ma
 the only thingIn the working version from the beginning of this articleIf you are invoking uWSGI with a different --uid or a different --git
 
 
+<a name='background'></a>
+#### A Bit of Background on uWSGI and Nginx
+There are two users of importance in this equation. One is the user that
+runs nginx (www-data in my case). The other is the user your app masquerades as
+via uWSGI. (ubuntu in my case).
+
+uWSGI will be the one to create the socket file, and it will set certain
+permissions on the file. Obviously since uWSGI created the file, it will
+have no trouble accessing it.
+
+By default, uWSGI creates the socket file with 755 permissions.
+With those permissions, the user of nginx is not be able to access the file.
+
 
 <a name='other-configs'></a>
 #### Other (Working) uWSGI / Nginx Configurations
@@ -215,6 +216,8 @@ This will at least give you a small win. It's not a permanent solution
 because each time uWSGI starts up it will reset the permissions
 on the socket.
 
+Other alternatives to using a unix socket include using a TCP socket. Since TCP sockets
+are usable by all users, permissions is not an issue.
 
 
 ---
